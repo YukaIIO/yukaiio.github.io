@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="th">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>สมุดบันทึกงาน | Student Planner</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;500;600;700;800&family=Nunito+Sans:wght@400;600;700;800&family=Sarabun:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="additions.css" />
+    <link rel="stylesheet" href="fonts.css" />
+  </head>
+  <body>
+    <section id="loginScreen" class="login-screen" aria-label="ลงทะเบียนหรือเข้าสู่ระบบ">
+      <form id="loginForm" class="login-card">
+        <div class="login-logo-wrap" id="loginLogoWrap"><img id="loginLogo" src="school-logo.png" alt="ตราโรงเรียนพยุห์วิทยา" class="login-logo" /></div>
+        <p class="login-label" id="authModeLabel">REGISTER</p>
+        <h2 id="authHeading">ลงทะเบียนสมุดบันทึกงาน</h2>
+        <p id="authDescription">สมัครบัญชีและเก็บข้อมูลไว้ในเบราว์เซอร์นี้เท่านั้น (ยังไม่ซิงก์ข้ามเครื่อง)</p>
+        <p class="school-only-note" id="schoolOnlyNote">สำหรับนักเรียนโรงเรียนพยุห์วิทยาเท่านั้น</p>
+        <label id="authNameLabel">ชื่อ - นามสกุล<input id="loginName" required placeholder="เช่น สมชาย ใจดี" autocomplete="name" /></label>
+        <div class="auth-student-row"><label id="authStudentIdLabel">รหัสนักเรียน (5 หลัก)<input id="loginStudentId" required inputmode="text" maxlength="254" placeholder="เช่น 12345" autocomplete="username" /></label>
+        <label id="authClassLabel">ชั้น/ห้อง<select id="loginClass" required><option value="1/1">ม.1/1</option><option value="1/2">ม.1/2</option><option value="2/1">ม.2/1</option><option value="2/2">ม.2/2</option><option value="2/3">ม.2/3</option><option value="2/4">ม.2/4</option><option value="3/1">ม.3/1</option><option value="3/2">ม.3/2</option><option value="3/3">ม.3/3</option><option value="4/1">ม.4/1</option><option value="4/2" selected>ม.4/2</option><option value="4/3">ม.4/3</option><option value="5/1">ม.5/1</option><option value="5/2">ม.5/2</option><option value="6/1">ม.6/1</option><option value="6/2">ม.6/2</option></select><input id="loginExternalClass" type="text" maxlength="40" placeholder="เช่น ม.ปลาย / Year 10" hidden /></label></div>
+        <label id="authRollNumberLabel" hidden>เลขที่ในห้อง (ไม่บังคับ)<input id="loginRollNumber" type="number" min="1" max="60" placeholder="เช่น 12" /></label>
+        <div class="auth-external-options" id="externalOptions" hidden><label>ปีการศึกษา<input id="loginAcademicYear" type="number" min="2500" max="2700" value="2569" inputmode="numeric" /></label><label>โลโก้ของคุณ (ไม่บังคับ)<input id="externalLogoInput" type="file" accept="image/png,image/jpeg,image/webp" /><small>ใช้ PNG, JPG หรือ WebP ขนาดไม่เกิน 1 MB</small><span id="externalLogoPreview" class="external-logo-preview" hidden></span></label></div>
+        <label id="authEmailLabel" hidden>อีเมล<input id="loginEmail" type="email" maxlength="254" autocomplete="email" placeholder="name@example.com" /></label>
+        <label id="authPasswordLabel">รหัสผ่าน<input id="loginPassword" required type="password" minlength="8" maxlength="128" autocomplete="new-password" placeholder="อย่างน้อย 8 ตัวอักษร" /></label>
+        <label id="authConfirmPasswordLabel" hidden>ยืนยันรหัสผ่านใหม่<input id="loginPasswordConfirm" type="password" minlength="8" maxlength="128" autocomplete="new-password" placeholder="กรอกรหัสผ่านใหม่อีกครั้ง" /></label>
+        <p id="authError" role="alert" aria-live="polite" hidden></p>
+        <button class="login-submit" id="authSubmit" type="submit">สมัครบัญชี <span>→</span></button>
+        <button type="button" id="forgotPasswordBtn" class="auth-switch" hidden>ลืมรหัสผ่าน?</button>
+        <button type="button" id="authSwitch" class="auth-switch">มีบัญชีแล้ว? เข้าสู่ระบบ</button>
+        <div class="auth-bottom"><button type="button" id="audienceSwitch" class="audience-switch" aria-pressed="false">สำหรับคนภายนอก</button><span id="audienceStatus">นักเรียนโรงเรียนพยุห์วิทยา</span></div>
+        <footer class="auth-footer">© 2026 สงวนลิขสิทธิ์โดย Administrator-Nattawat Numdee</footer>
+      </form>
+    </section>
+    <div class="app-shell" id="appShell" hidden>
+      <aside class="sidebar">
+        <div class="brand">
+          <div class="logo-placeholder" id="sidebarLogoWrap"><img id="sidebarLogo" src="school-logo.png" alt="ตราโรงเรียนพยุห์วิทยา" /></div>
+          <div><p class="eyebrow">STUDENT PLANNER</p><h1 id="scheduleIdentityTitle">สมุดบันทึกงานมัธยมศึกษาปีที่ 4/2 ภาคเรียนที่ 2 ปีการศึกษา 2569</h1></div>
+        </div>
+        <nav class="nav-menu" aria-label="เมนูหลัก">
+          <button class="nav-link active" data-view="assignments"><span>▣</span> งานค้าง <i>›</i></button>
+          <button class="nav-link" data-view="schedule"><span>▦</span> ตารางเรียน <i>›</i></button>
+        </nav>
+        <div class="student-card">
+          <div class="avatar" id="profileAvatar">Y</div>
+          <div><strong>ยูกะ</strong></div>
+          <div class="student-actions"><button id="editStudent" class="icon-button" aria-label="แก้ไขข้อมูลนักเรียน">⚙</button><button id="logoutBtn" class="logout-button" aria-label="ออกจากระบบ">↪</button></div>
+        </div>
+      </aside>
+
+      <main>
+        <header class="topbar">
+          <p id="syncStatus" class="sync-status" role="status" aria-live="polite" hidden></p>
+          <div class="mobile-brand"><span class="mini-logo" id="mobileLogoWrap"><img id="mobileLogo" src="school-logo.png" alt="ตราโรงเรียน" /></span><strong>สมุดบันทึกงาน</strong></div>
+          <div class="date-chip" id="todayDate"></div>
+          <div class="notification-control"><button id="enableNotifications" class="notification-button" aria-label="เปิดการแจ้งเตือน">♧ <span>เปิดแจ้งเตือน</span><b></b></button><span id="notificationStatus" role="status" aria-live="polite">ยังไม่ได้เปิดการแจ้งเตือน</span></div>
+        </header>
+
+        <section id="assignmentsView" class="page-view">
+          <div class="hero-row">
+            <div><p class="eyebrow orange">YOUR SCHOOL LIFE, ORGANIZED</p><h2>สวัสดี, <span id="studentGreeting">ยูกะ</span> <span class="wave">👋</span></h2><p class="subtext">จัดการงานและการบ้านของคุณให้เป็นเรื่องง่าย</p></div>
+            <div class="student-id"><span>เลขประจำตัวนักเรียน</span><strong id="studentId">-</strong></div>
+          </div>
+          <div class="stats-grid">
+            <article class="stat-card overdue"><span class="stat-icon">!</span><div><strong id="overdueCount">0</strong><p>เลยกำหนด</p></div></article>
+            <article class="stat-card pending"><span class="stat-icon">□</span><div><strong id="pendingCount">0</strong><p>งานที่ค้าง</p></div></article>
+            <article class="stat-card progress"><span class="stat-icon">◌</span><div><strong id="progressCount">0</strong><p>กำลังทำ</p></div></article>
+            <article class="stat-card done"><span class="stat-icon">✓</span><div><strong id="doneCount">0</strong><p>เสร็จแล้ว</p></div></article>
+          </div>
+          <section class="panel">
+            <div class="panel-heading"><div><h3>รายการงานของฉัน</h3><p>ติดตามทุกงานสำคัญได้ในที่เดียว</p></div><span id="taskTotal" class="total-pill">0 รายการ</span></div>
+            <div class="progress-overview"><div class="progress-copy"><div><strong>ความคืบหน้าของงาน</strong><span id="progressText">ยังไม่มีงาน</span></div><b id="progressPercent">0%</b></div><div class="linear-progress" role="progressbar" aria-label="ความคืบหน้าของงาน"><span id="progressFill"></span></div><div class="progress-summary"><span><i class="done-dot"></i> เสร็จแล้ว <b id="progressDone">0</b></span><span><i class="open-dot"></i> เหลือ <b id="progressRemaining">0</b></span></div></div>
+            <div class="filter-action-bar">
+              <div class="filters" role="tablist">
+                <button class="filter active" data-filter="open">ยังไม่เสร็จ</button><button class="filter" data-filter="mine">งานของฉัน</button><button class="filter" data-filter="overdue">เลยกำหนด</button><button class="filter" data-filter="done">เสร็จแล้ว</button><button class="filter" data-filter="all">ทั้งหมด</button>
+              </div>
+              <div class="actions"><label class="select-wrap"><select id="subjectFilter"><option value="all">ทุกวิชา</option></select></label><button id="refreshBtn" class="secondary-btn">↻ รีเฟรช</button><button id="addTaskBtn" class="primary-btn">＋ เพิ่มงาน</button></div>
+            </div>
+            <div id="taskList" class="task-list"></div>
+            <div id="emptyState" class="empty-state" hidden><span>✓</span><h3>ยังไม่มีงานในรายการนี้</h3><p>เพิ่มงานใหม่เพื่อเริ่มวางแผนได้เลย</p></div>
+          </section>
+        </section>
+
+        <section id="scheduleView" class="page-view" hidden>
+          <div class="hero-row"><div><p class="eyebrow orange">WEEKLY CLASS SCHEDULE</p><h2>ตารางเรียน</h2><p class="subtext">เลือกห้อง ภาคเรียน และปีการศึกษา</p></div></div>
+          <section class="panel schedule-panel">
+            <div class="schedule-controls">
+              <label>ชั้น/ห้อง<select id="scheduleClass"></select></label>
+              <label>ภาคเรียน<select id="scheduleSemester"><option value="1">ภาคเรียนที่ 1</option><option value="2" selected>ภาคเรียนที่ 2</option></select></label>
+              <label>ปีการศึกษา<input id="scheduleYear" type="number" min="2500" max="2700" value="2569" inputmode="numeric" /></label>
+              <label id="scheduleTrackField" hidden>สายการเรียน<select id="scheduleTrack"><option value="science-math">วิทย์-คณิต</option><option value="general">สายทั่วไป</option></select></label>
+              <button id="scheduleRefresh" class="secondary-btn" type="button">↻ ซิงค์ตาราง</button>
+            </div>
+            <div class="schedule-toolbar">
+              <p id="scheduleSource" aria-live="polite">กำลังโหลดตารางเรียน…</p>
+              <div class="schedule-actions">
+                <button id="scheduleUseCommon" class="secondary-btn" type="button" hidden>ดูตารางส่วนกลาง</button>
+                <button id="scheduleEdit" class="secondary-btn" type="button">แก้ไขตารางส่วนตัว</button>
+                <button id="scheduleSavePersonal" class="primary-btn" type="button" hidden>บันทึกตารางของฉัน</button>
+                <button id="schedulePublish" class="primary-btn" type="button" hidden>เผยแพร่ตารางส่วนกลาง</button>
+              </div>
+            </div>
+            <div class="schedule-scroll"><table id="scheduleTable"></table></div>
+          </section>
+          <div class="legend"><span><i class="class-dot"></i> ตารางส่วนกลางจากแอดมิน</span><span><i class="break-dot"></i> ตารางส่วนตัวจะแสดงเฉพาะบัญชีเจ้าของ</span></div>
+        </section>
+      </main>
+    </div>
+
+    <dialog id="taskDialog"><form id="taskForm" method="dialog"><div class="modal-header"><div><p class="eyebrow orange">ASSIGNMENT</p><h3 id="dialogTitle">เพิ่มงานใหม่</h3></div><button type="button" class="close" data-close>×</button></div><input type="hidden" id="taskId" /><div class="form-grid"><label>ชื่องาน<input id="title" required placeholder="เช่น แบบฝึกหัดบทที่ 3" /></label><label>วิชา<select id="subject" required></select></label><label>วันกำหนดส่ง<input id="dueDate" type="date" required /></label><label>เวลาส่ง <small>(ไม่บังคับ)</small><input id="dueTime" type="time" /></label><label class="unknown-due wide"><input id="unknownDue" type="checkbox" /> <span>ยังไม่ทราบวันส่ง — บันทึกงานไว้ก่อน</span></label><label>สถานะ<select id="status"><option value="pending">งานที่ค้าง</option><option value="progress">กำลังทำ</option><option value="done">เสร็จแล้ว</option></select></label><label class="wide">รายละเอียดเพิ่มเติม<textarea id="note" placeholder="คำแนะนำ, สิ่งที่ต้องส่ง..." rows="3"></textarea></label></div><div class="modal-actions"><button type="button" class="secondary-btn" data-close>ยกเลิก</button><button class="primary-btn" id="saveTask">บันทึกงาน</button></div></form></dialog>
+    <dialog id="studentDialog"><form id="studentForm" method="dialog"><div class="modal-header"><h3>ข้อมูลนักเรียน</h3><button type="button" class="close" data-close>×</button></div><div class="form-grid"><label class="wide profile-upload">รูปโปรไฟล์ <span class="avatar-preview" id="avatarPreview">Y</span><input id="avatarInput" type="file" accept="image/png,image/jpeg,image/webp" /><small>เปลี่ยนรูปได้โดยไม่ต้องยืนยันตัวตน · รองรับ PNG, JPG หรือ WebP</small></label><label class="wide" id="profileVerifyLabel">ยืนยันรหัสผ่านปัจจุบัน<input id="profileVerifyPassword" type="password" autocomplete="current-password" /><small id="profileVerifyStatus" role="status">ยืนยันตัวตนก่อนแก้ไขชื่อ ชั้น และเลขที่</small><button type="button" id="verifyProfileBtn" class="secondary-btn">ยืนยันตัวตน</button></label><label>ชื่อ-นามสกุล<input id="studentNameInput" required disabled /></label><label>เลขประจำตัวนักเรียน (5 หลัก)<input id="studentIdInput" required inputmode="numeric" pattern="[0-9]{5}" minlength="5" maxlength="5" title="กรุณากรอกรหัสนักเรียนเป็นตัวเลข 5 หลัก" disabled /></label><label>ชั้น/ห้อง<select id="studentClassInput" disabled><option value="1/1">ม.1/1</option><option value="1/2">ม.1/2</option><option value="2/1">ม.2/1</option><option value="2/2">ม.2/2</option><option value="2/3">ม.2/3</option><option value="2/4">ม.2/4</option><option value="3/1">ม.3/1</option><option value="3/2">ม.3/2</option><option value="3/3">ม.3/3</option><option value="4/1">ม.4/1</option><option value="4/2">ม.4/2</option><option value="4/3">ม.4/3</option><option value="5/1">ม.5/1</option><option value="5/2">ม.5/2</option><option value="6/1">ม.6/1</option><option value="6/2">ม.6/2</option></select></label><label>เลขที่ในห้อง (ไม่บังคับ)<input id="studentRollInput" type="number" min="1" max="60" disabled /></label><p id="lastLoginInfo" class="wide login-history-info"></p></div><div class="modal-actions"><button type="button" class="secondary-btn" data-close>ยกเลิก</button><button id="saveStudentProfile" class="primary-btn">บันทึกข้อมูล</button></div></form></dialog>
+    <dialog id="subjectPickerDialog" class="subject-picker-dialog"><form id="subjectPickerForm" method="dialog"><div class="modal-header"><div><p class="eyebrow orange">CLASS SCHEDULE</p><h3>เลือกวิชาในตาราง</h3></div><button type="button" class="close" data-close>×</button></div><p id="subjectPickerContext" class="subject-picker-context"></p><label>ชื่อวิชา<input id="scheduleSubjectName" maxlength="100" placeholder="กรอกชื่อวิชาตามประกาศของโรงเรียน" autocomplete="off" /></label><label>รหัสวิชา / ครูผู้สอน <small>(ไม่บังคับ)</small><input id="scheduleSubjectDetail" maxlength="120" placeholder="เช่น ว30101 · ครู..." /></label><p class="subject-picker-help">ยังไม่มีรายชื่อวิชาที่โรงเรียนประกาศในช่วงปิดภาคเรียน คุณสามารถเว้นว่างไว้หรือพิมพ์ข้อมูลจริงเมื่อทราบได้</p><div class="modal-actions"><button type="button" id="clearScheduleSubject" class="secondary-btn">ลบวิชานี้</button><button type="button" class="secondary-btn" data-close>ยกเลิก</button><button class="primary-btn">บันทึกช่องนี้</button></div></form></dialog>
+    <dialog id="confirmDialog" class="confirm-dialog"><form method="dialog"><div id="confirmIcon" class="confirm-icon">!</div><h3 id="confirmTitle">ยืนยันการดำเนินการ</h3><p id="confirmMessage"></p><div class="modal-actions"><button id="confirmCancel" type="button" class="secondary-btn">ยกเลิก</button><button id="confirmAccept" type="button" class="primary-btn">ยืนยัน</button></div></form></dialog>
+    <div id="pageLoader" class="page-loader" aria-label="กำลังโหลด"><img src="school-logo.png" alt="" /><span>กำลังเตรียมสมุดบันทึกงาน...</span></div>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-config.js"></script>
+    <script src="auth.js"></script>
+    <script src="offline-store.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
